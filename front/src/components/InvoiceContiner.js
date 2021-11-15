@@ -1,14 +1,23 @@
-import React from 'react';
-import InvoiceRoot from './invoiceRoot';
+import React from "react";
+import InvoiceRoot from "./invoiceRoot";
+
 
 function InvoiceContiner(props) {
-    return (
-        <div style={{display:'grid',justifyContent:'center', gridTemplateColumns:"80%"}}>
-        <InvoiceRoot/>
-        </div>
+  return (
+    <div
+     className="container mycon"
+      
+    >
+      <InvoiceRoot />
 
-    
-    );
+   
+   
+
+
+
+     
+    </div>
+  );
 }
 
 export default InvoiceContiner;

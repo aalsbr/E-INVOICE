@@ -6,18 +6,24 @@ const data = require("./users.json");
 app.use(express.json());
 
 app.use(cors());
+//Users
+const jsonData = fs.readFileSync("./users.json");
+const jsonObj = JSON.parse(jsonData);
+//Invoice Data
+const InvoicData = fs.readFileSync("./invoiceData.json");
+const invoiceObj = JSON.parse(InvoicData);
+
+
 
 app.post("/login", (req, res) => {
   const userName = req.body.username;
   const passWord = req.body.password;
   console.log(req.body);
 
-  const jsonData = fs.readFileSync("./users.json");
-  const jsonObj = JSON.parse(jsonData);
   if (jsonObj.username == userName && jsonObj.password == passWord) {
     res.send("good");
 
-    // res.end()
+  
   } else {
     res.send(userName);
     // res.end()
@@ -25,37 +31,41 @@ app.post("/login", (req, res) => {
 });
 
 // post to invoiceData json file
-app.post("/getInfo", (req, res) => {
-  let newInvoice = {
-    id: req.body.id,
-    date: req.body.date,
-    clintName: req.body.clintName,
-    clintPhone: req.body.clintPhone,
-    itemId: req.body.itemId,
-    itemName: req.body.itemName,
-    price: req.body.price,
-    amount: req.body.amount,
-    quntity: req.body.quntity,
-    total: req.body.total,
-    subTotal: req.body.subTotal,
-    tax: req.body.tax,
-    totalAmount: req.body.totalAmount,
-  };
+app.post("/post", (req, res) => {
+  
+  // let newInvoice = {
+  //   id: (jsonObj.length)?jsonObj.length + 1:0,
+  //   date: new Date(),
+  //   clintName: req.body.clintName,
+  //   clintPhone: req.body.clintPhone,
+  //   itemId: req.body.itemId,
+  //   subTotal: req.body.subTotal,
+  //   tax: req.body.tax,
+  //   totalAmount: req.body.totalAmount,
+  // };
 
-  invoiceData.push(newInvoice);
+  let newPost = { id: invoiceObj.length+1  , ...req.body }
 
-  res.json(invoiceData);
+  invoiceObj.push(newPost); // push new post
+  // Array.prototype.push.apply(jsonObj, postData);
+  //push in the current json file
+  fs.writeFile("./invoiceData.json", JSON.stringify(invoiceObj), (err) => {
+  });
+   console.log("test")
+
+  res.json("");
 });
 
 // get id from invoise json
+app.get("/getApi", (req, res) => {
 
-app.get("/getId", (req, res) => {
-  console.log(req.body);
-
-  const jsonInvoice = fs.readFileSync("./invoiceData.json");
-  const invoiceObj = JSON.parse(jsonInvoice);
-
-  res.send(invoiceObj.id + 1);
+  let id = (invoiceObj.length)?invoiceObj.length+1:1;
+  console.log("ds",id)
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+  const date = new Date()
+  const dateString = `${MONTHS[date.getMonth()]} ${date.getDate()},${date.getFullYear()}`
+  console.log(dateString)
+  res.json([id,dateString]);
 });
 
 app.listen(3003, console.log("running"));

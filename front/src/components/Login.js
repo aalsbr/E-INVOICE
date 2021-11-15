@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../login.css";
-import InvoiceContiner from "./InvoiceContiner";
+
 
 function Login({setValue}) {
   const handle = (e) => {
@@ -10,6 +10,8 @@ function Login({setValue}) {
     console.log(localStorage.getItem("token"));
  
   };
+
+
 
   const handelLogin = async(e) => {
     e.preventDefault();
@@ -28,11 +30,12 @@ function Login({setValue}) {
       console.log(err);
     }
   };
+ 
 
 
   return (
-    <section className="vh-60 mybgd">
-      <h3 style={{ textAlign: "center" }}>E-Invoice Login</h3>
+    <section className="vh-60 ">
+      <h3 style={{ textAlign: "center" ,marginTop:"5%"}}>E-Invoice Login</h3>
       <div className="container py-5 h-100 ">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col col-xl-10">
@@ -46,8 +49,8 @@ function Login({setValue}) {
                     style={{ borderRadius: "1rem 0 0 1rem" }}
                   />
                 </div>
-                <div className="col-md-6 col-lg-7 d-flex align-items-center mybgd">
-                  <div className="card-body p-4 p-lg-5 text-black">
+                <div className="col-md-6 col-lg-7 d-flex align-items-center shadow  mybgd" style={{borderRadius:15}}>
+                  <div className="card-body p-4 p-lg-5 text-black ">
                     <form>
                       {/*    <div className="d-flex align-items-center mb-5 pb-1">
 
