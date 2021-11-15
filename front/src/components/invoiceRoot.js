@@ -12,6 +12,8 @@ function InvoiceRoot({ test }) {
   const[subTotal,setSubTotal]=useState(0);
   const[tax,setTax]=useState(0);
   const[totalAmount,setTotalAmount]=useState(0);
+  const[clientName,setClientName]=useState("");
+  const[clientPhone,setClientPhone]=useState("");
 
 
   const mystate = useSelector((state) => {
@@ -34,7 +36,7 @@ function InvoiceRoot({ test }) {
 
   useEffect(()=>{
     setTax(subTotal*15/100)
-    let total =  subTotal+(subTotal*15/100)
+    let total =  subTotal +(subTotal*15/100)
     setTotalAmount(total)
   },[subTotal])
 
@@ -98,7 +100,7 @@ function InvoiceRoot({ test }) {
                   </span>
                   <br />
                   <span className="text-600 text-110 text-blue align-middle">
-                    <input></input>
+                    <input value={clientName} onChange={(e)=>setClientName(e.target.value)}></input>
                   </span>
                 </div>
                 <div>
@@ -107,7 +109,7 @@ function InvoiceRoot({ test }) {
                   </span>
                   <br />
                   <span className="text-600 text-110 text-blue align-middle">
-                    <input></input>
+                    <input  value={clientPhone} onChange={(e)=>setClientPhone(e.target.value)}></input>
                   </span>
                 </div>
               </div>
