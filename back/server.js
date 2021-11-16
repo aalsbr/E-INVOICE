@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const cors = require("cors");
-const data = require("./users.json");
-const invoiceData = require("./invoiceData.json");
+
 app.use(express.json());
 
 app.use(cors());
@@ -26,7 +25,6 @@ app.post("/login", (req, res) => {
     // res.end()
   }
 });
-
 
 app.post("/post", (req, res) => {
   let newPost = { id: invoiceObj.length + 1, ...req.body };
@@ -65,33 +63,45 @@ app.get("/getApi", (req, res) => {
   res.json([id, dateString]);
 });
 
-app.put("/putInfo", (req, res) => {
-  let found = invoiceData.find((item) => {
-    return item.id === parseInt(req.params.id);
-  });
-  if (found) {
-    let update = {
-      id: found.id,
-      date: found.data,
-      clintName: req.body.clintName,
-      clintPhone: req.body.clintPhone,
-      itemId: found.itemId,
-      itemName: req.body.itemName,
-      price: req.body.price,
-      amount: req.body.amount,
-      quntity: req.body.quntity,
-      total: found.total,
-      subTotal: found.subTotal,
-      tax: found.tax,
-      totalAmount: found.totalAmount,
-    };
-    const target = invoiceData.indexOf(found);
+app.get("/getAll", (req, res) => {
+  console.log(invoiceObj);
+  res.json(invoiceObj);
+});
 
-    invoiceData.splice(target, 1, update);
-    res.send(invoiceData);
-  } else {
-    res.sendStatus(404);
-  }
+app.put("/:id", (req, res) => {
+  let index = invoiceObj.findIndex(
+    (item) => item.id === parseInt(req.params.id)
+  );
+  // if the user enter wrong id
+  if (index == -1) return res.send("The id is not exsist");
+  //else
+  let newPost = { id: parseInt(req.params.id), ...req.body };
+
+  invoiceObj[index] = newPost;
+
+  fs.writeFile("./invoiceData.json", JSON.stringify(invoiceObj), (err) => {
+    if (err) {
+      throw err;
+    }
+  });
+  res.send(jsonObj);
+});
+
+app.delete("/:id", (req, res) => {
+  let index = invoiceObj.findIndex(
+    (item) => item.id === parseInt(req.params.id)
+  );
+  // if the user enter wrong id
+  if (index == -1) return res.send("The id is not found");
+  //else
+  invoiceObj.splice(index, 1);
+
+  fs.writeFile("./invoiceData.json", JSON.stringify(invoiceObj), (err) => {
+    if (err) {
+      throw err;
+    }
+  });
+  res.send(invoiceObj);
 });
 
 app.listen(3003, console.log("running"));

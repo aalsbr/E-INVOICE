@@ -3,12 +3,10 @@ const defualtState = {
 };
 
 const btnSave = (state = defualtState, { type, payload }) => {
-
   switch (type) {
-
     case "add":
-      return { btnSave:[...state.btnSave, payload] };
-      
+      return { btnSave: [...state.btnSave, payload] };
+
     case "edit":
       const newArray = [...state.btnSave]; //making a new array
 
@@ -27,14 +25,12 @@ const btnSave = (state = defualtState, { type, payload }) => {
       };
     case "remove":
       const tempArr = [...state.btnSave]; //making a new array
-      const data = tempArr.filter((e) => e.id !== payload)
-     for(let i=0;i<data.length;i++){
-      if(payload< data[i].id)
-      data[i].id= data[i].id -1
-     }
-    
+      const data = tempArr.filter((e) => e.id !== payload);
+      for (let i = 0; i < data.length; i++) {
+        if (payload < data[i].id) data[i].id = data[i].id - 1;
+      }
 
-      return { btnSave:  data    };
+      return { btnSave: data };
 
     default:
       return state;
@@ -42,7 +38,6 @@ const btnSave = (state = defualtState, { type, payload }) => {
 };
 
 export default btnSave;
-
 
 export const changeState = (payload) => {
   return {
@@ -61,5 +56,10 @@ export const remove = (payload) => {
   return {
     type: "remove",
     payload: payload,
+  };
+};
+export const cleen = () => {
+  return {
+    type: "cleen",
   };
 };
