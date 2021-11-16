@@ -7,11 +7,9 @@ function MyDocument({ test }) {
       <Page
         size="A4"
         style={{
-          backgroundColor: "red",
           marginTop: 50,
           paddingRight: 50,
           paddingLeft: 50,
-
           height: 500,
         }}
       >
@@ -64,27 +62,6 @@ function MyDocument({ test }) {
           <Text>Price</Text>
           <Text>Total</Text>
         </View>
-
-        {test.map((e, i) => {
-          {
-            return (
-              <View
-                key={i}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  marginRight: 100,
-                }}
-              >
-                <Text>{e.name}</Text>
-                <Text>{e.quntity}</Text>
-                <Text>{e.price}</Text>
-                <Text>{e.total}</Text>
-              </View>
-            );
-          }
-        })}
 
         <hr />
 
