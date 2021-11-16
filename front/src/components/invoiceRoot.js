@@ -8,7 +8,8 @@ import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
-function InvoiceRoot({ test }) {
+function InvoiceRoot() {
+
   const [id, setId] = useState(1);
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
@@ -25,7 +26,6 @@ function InvoiceRoot({ test }) {
       btnSave: state.btnSave.btnSave,
     };
   });
-
   const dispach = useDispatch();
 
   const handelAdd = () => {
