@@ -3,6 +3,7 @@ const app = express();
 const fs = require("fs");
 const cors = require("cors");
 const data = require("./users.json");
+const invoiceData = require("./invoiceData.json");
 app.use(express.json());
 
 app.use(cors());
@@ -31,23 +32,12 @@ app.post("/login", (req, res) => {
 });
 
 // post to invoiceData json file
+
 app.post("/post", (req, res) => {
   
-  // let newInvoice = {
-  //   id: (jsonObj.length)?jsonObj.length + 1:0,
-  //   date: new Date(),
-  //   clintName: req.body.clintName,
-  //   clintPhone: req.body.clintPhone,
-  //   itemId: req.body.itemId,
-  //   subTotal: req.body.subTotal,
-  //   tax: req.body.tax,
-  //   totalAmount: req.body.totalAmount,
-  // };
-
   let newPost = { id: invoiceObj.length+1  , ...req.body }
 
   invoiceObj.push(newPost); // push new post
-  // Array.prototype.push.apply(jsonObj, postData);
   //push in the current json file
   fs.writeFile("./invoiceData.json", JSON.stringify(invoiceObj), (err) => {
   });
@@ -66,6 +56,36 @@ app.get("/getApi", (req, res) => {
   const dateString = `${MONTHS[date.getMonth()]} ${date.getDate()},${date.getFullYear()}`
   console.log(dateString)
   res.json([id,dateString]);
+});
+
+app.put("/putInfo", (req, res) => {
+  let found = invoiceData.find((item) => {
+    return item.id === parseInt(req.params.id);
+  });
+  if (found) {
+    let update = {
+      id: found.id,
+      date: found.data,
+      clintName: req.body.clintName,
+      clintPhone: req.body.clintPhone,
+      itemId: found.itemId,
+      itemName: req.body.itemName,
+      price: req.body.price,
+      amount: req.body.amount,
+      quntity: req.body.quntity,
+      total: found.total,
+      subTotal: found.subTotal,
+      tax: found.tax,
+      totalAmount: found.totalAmount,
+    };
+    const target  = invoiceData.indexOf(found)
+
+    invoiceData.splice(target , 1 , update)
+    res.send(invoiceData)
+
+  }else{
+    res.sendStatus(404)
+  }
 });
 
 app.listen(3003, console.log("running"));
