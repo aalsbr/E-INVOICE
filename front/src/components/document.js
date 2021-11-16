@@ -7,11 +7,9 @@ function MyDocument({ test }) {
       <Page
         size="A4"
         style={{
-          backgroundColor: "red",
           marginTop: 50,
           paddingRight: 50,
           paddingLeft: 50,
-
           height: 500,
         }}
       >

@@ -26,7 +26,15 @@ const btnSave = (state = defualtState, { type, payload }) => {
         btnSave: newArray,
       };
     case "remove":
-      return { btnSave: state.btnSave.filter((e) => e.id !== payload.id) };
+      const tempArr = [...state.btnSave]; //making a new array
+      const data = tempArr.filter((e) => e.id !== payload)
+     for(let i=0;i<data.length;i++){
+      if(payload< data[i].id)
+      data[i].id= data[i].id -1
+     }
+    
+
+      return { btnSave:  data    };
 
     default:
       return state;

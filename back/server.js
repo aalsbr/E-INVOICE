@@ -7,18 +7,24 @@ const invoiceData = require("./invoiceData.json");
 app.use(express.json());
 
 app.use(cors());
+//Users
+const jsonData = fs.readFileSync("./users.json");
+const jsonObj = JSON.parse(jsonData);
+//Invoice Data
+const InvoicData = fs.readFileSync("./invoiceData.json");
+const invoiceObj = JSON.parse(InvoicData);
+
+
 
 app.post("/login", (req, res) => {
   const userName = req.body.username;
   const passWord = req.body.password;
   console.log(req.body);
 
-  const jsonData = fs.readFileSync("./users.json");
-  const jsonObj = JSON.parse(jsonData);
   if (jsonObj.username == userName && jsonObj.password == passWord) {
     res.send("good");
 
-    // res.end()
+  
   } else {
     res.send(userName);
     // res.end()
@@ -26,37 +32,30 @@ app.post("/login", (req, res) => {
 });
 
 // post to invoiceData json file
-app.post("/getInfo", (req, res) => {
-  let newInvoice = {
-    id: (invoiceData.length-1).id + 1,
-    date: new Date().toLocaleString(),
-    clintName: req.body.clintName,
-    clintPhone: req.body.clintPhone,
-    itemId: req.body.itemId,
-    itemName: req.body.itemName,
-    price: req.body.price,
-    amount: req.body.amount,
-    quntity: req.body.quntity,
-    total: req.body.total,
-    subTotal: req.body.subTotal,
-    tax: 0.15,
-    totalAmount: req.body.totalAmount,
-  };
 
-  invoiceData.push(newInvoice);
+app.post("/post", (req, res) => {
+  
+  let newPost = { id: invoiceObj.length+1  , ...req.body }
 
-  res.json(invoiceData);
+  invoiceObj.push(newPost); // push new post
+  //push in the current json file
+  fs.writeFile("./invoiceData.json", JSON.stringify(invoiceObj), (err) => {
+  });
+   console.log("test")
+
+  res.json("");
 });
 
 // get id from invoise json
+app.get("/getApi", (req, res) => {
 
-app.get("/getId", (req, res) => {
-  console.log(req.body);
-
-  const jsonInvoice = fs.readFileSync("./invoiceData.json");
-  const invoiceObj = JSON.parse(jsonInvoice);
-
-  res.send(invoiceObj.id + 1);
+  let id = (invoiceObj.length)?invoiceObj.length+1:1;
+  console.log("ds",id)
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+  const date = new Date()
+  const dateString = `${MONTHS[date.getMonth()]} ${date.getDate()},${date.getFullYear()}`
+  console.log(dateString)
+  res.json([id,dateString]);
 });
 
 app.put("/putInfo", (req, res) => {
