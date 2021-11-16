@@ -26,6 +26,7 @@ app.post("/login", (req, res) => {
   }
 });
 
+
 app.post("/post", (req, res) => {
   let newPost = { id: invoiceObj.length + 1, ...req.body };
 
@@ -105,3 +106,4 @@ app.delete("/:id", (req, res) => {
 });
 
 app.listen(3003, console.log("running"));
+

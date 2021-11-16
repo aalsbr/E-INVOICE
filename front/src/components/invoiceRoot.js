@@ -8,7 +8,10 @@ import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
+
 function InvoiceRoot() {
+
+
   const [id, setId] = useState(1);
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
@@ -44,6 +47,7 @@ function InvoiceRoot() {
         return alert(`Please fill the product price in row number ${i + 1} `);
     }
 
+
     //Defined obj containes all invoice information to be stored in json file
     let obj = {
       date: date,
@@ -66,6 +70,7 @@ function InvoiceRoot() {
   };
 
   useEffect(async () => {
+
     try {
       const res = await axios.get("http://localhost:3003/getApi");
       setInvoiceId(res.data[0]);
@@ -83,6 +88,7 @@ function InvoiceRoot() {
     setTotalAmount(total);
   }, [subTotal]);
 
+
   const handelCalculation = () => {
     let data = 0;
 
@@ -97,12 +103,12 @@ function InvoiceRoot() {
 
   return (
     <div
-      className="page-content container  myshadow  transparent "
-      style={{ borderRadius: 20, marginTop: "1%" }}
+
+      className="page-content container  myshadow "
+      style={{ backgroundColor: "white", borderRadius: 20, marginTop: "1%" }}
     >
-      <h3 className="pt-4" style={{ textAlign: "center" }}>
-        Create New Invoice
-      </h3>
+      <h3  className="pt-4" style={{ textAlign: "center" }}>Create New Invoice</h3>
+
       <div className="page-header text-blue-d2">
         <h1 className="page-title text-secondary-d1">
           Invoice
@@ -111,6 +117,7 @@ function InvoiceRoot() {
 
         <div className="page-tools">
           <div className="action-buttons">
+
             <PDFDownloadLink
               document={<MyDocument test={mystate.btnSave} />}
               fileName="somename.pdf"
@@ -297,6 +304,7 @@ function InvoiceRoot() {
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
