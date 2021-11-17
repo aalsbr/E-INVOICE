@@ -229,9 +229,9 @@
         "date": "Nov 16,2021",
         "clintName": "Abdullah Aldawsari",
         "clintPhone": "Abdullah Aldawsari",
-        "subTotal": 1,
-        "tax": 0.15,
-        "totalAmount": 1.15,
+        "subTotal": 11,
+        "tax": 1.65,
+        "totalAmount": 12.65,
         "itemId": [
             {
                 "id": 1,
@@ -239,33 +239,14 @@
                 "quntity": "1",
                 "price": "1",
                 "total": 1
-            }
-        ]
-    },
-    {
-        "id": 19,
-        "date": "Nov 16,2021",
-        "clintName": "sss",
-        "clintPhone": "sss",
-        "subTotal": 48,
-        "tax": 7.2,
-        "totalAmount": 55.2,
-        "itemId": [
-            {
-                "id": 1,
-                "name": "ssss",
-                "quntity": "2",
-                "price": "2",
-                "total": 4
             },
             {
-                "id": 2,
-                "name": "snsjljnld",
+                "id": 1,
+                "name": "wwooowwo",
                 "quntity": "2",
-                "price": "20",
-                "total": 40
+                "price": "5",
+                "total": 10
             }
         ]
     }
 ]
-
