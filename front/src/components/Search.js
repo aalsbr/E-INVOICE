@@ -2,25 +2,42 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../invoice.css";
-import { faFileInvoice } from "@fortawesome/free-solid-svg-icons";
+import { faDigitalTachograph, faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router";
 
 function Search(props) {
   const [data, setData] = useState([]);
+  const [itemCount, setItemCount] = useState(0);
+  const [InviceNo, setInvoiceNo] = useState(0);
+  const [earnings, setEarnings] = useState(0);
   
   const navigate = useNavigate();
+
+
 
   useEffect(async () => {
     try {
       const res = await axios.get("http://localhost:3003/getAll");
       setData(res.data);
+       setEarnings( res.data.reduce((a, b) => a + (b["totalAmount"] || 0), 0).toFixed(2))
+   
+       setInvoiceNo(res.data.length)
+       setItemCount(res.data.reduce((a, b) => a + (b.itemId.length || 0), 0))
+      
+      
       console.log("this correct :", res.data);
     } catch (err) {
       console.log(err);
     }
+ 
+     //~> 235
+    console.log(earnings); 
+
+
+
   }, []);
-  console.log("this data :", data);
+
 
   return (
     <div className="container mt-5  ">
@@ -33,11 +50,11 @@ function Search(props) {
                   <i className="fas fa-shopping-cart"></i>
                 </div>
                 <div className="mb-4">
-                  <h5 className="card-title mb-0">New Orders</h5>
+                  <h5 className="card-title mb-0">InvoiceNo</h5>
                 </div>
                 <div className="row align-items-center mb-2 d-flex">
                   <div className="col-8">
-                    <h2 className="d-flex align-items-center mb-0">3,243</h2>
+                    <h2 className="d-flex align-items-center mb-0">{InviceNo}</h2>
                   </div>
                 </div>
               </div>
@@ -51,11 +68,11 @@ function Search(props) {
                   <i className="fas fa-ticket-alt"></i>
                 </div>
                 <div className="mb-4">
-                  <h5 className="card-title mb-0">Ticket Resolved</h5>
+                  <h5 className="card-title mb-0">Total Items purchased</h5>
                 </div>
                 <div className="row align-items-center mb-2 d-flex">
                   <div className="col-8">
-                    <h2 className="d-flex align-items-center mb-0">578</h2>
+                    <h2 className="d-flex align-items-center mb-0">{itemCount}</h2>
                   </div>
                 </div>
               </div>
@@ -68,11 +85,11 @@ function Search(props) {
                   <i className="fas fa-dollar-sign"></i>
                 </div>
                 <div className="mb-4">
-                  <h5 className="card-title mb-0">Revenue Today</h5>
+                  <h5 className="card-title mb-0">Total Revenue </h5>
                 </div>
                 <div className="row align-items-center mb-2 d-flex">
                   <div className="col-8">
-                    <h2 className="d-flex align-items-center mb-0">$11.61k</h2>
+                    <h2 className="d-flex align-items-center mb-0">${earnings}</h2>
                   </div>
                 </div>
               </div>
@@ -82,6 +99,8 @@ function Search(props) {
       </div>
       <hr />
       <div className="col  ">
+      <h3 style={{textAlign:'center'}}> Invoices</h3>
+      <hr/>
         <div className="row justify-content-center  ">
           {data.map((e) => {
             return (
@@ -97,7 +116,7 @@ function Search(props) {
                   <hr />
                   <button
                     onClick={() =>
-                      navigate(`/search/${e.id}`, { state: { mydata: e } })
+                      navigate(`/${e.id}`, { state: { mydata: e } })
                     }
                     className="btn btn-secondary"
                   >

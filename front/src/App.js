@@ -1,9 +1,9 @@
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faFileInvoice, faFileInvoiceDollar, faHome, faReceipt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import EditInvoice from "./components/EditInvoice";
-
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import InvoiceContiner from "./components/InvoiceContiner";
 import Login from "./components/Login";
 import Search from "./components/Search";
@@ -42,18 +42,29 @@ function App() {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
+                <li className="nav-item m-2">
                   <Link className="nav-link" to="/">
-                    Create Invoice
+                  <FontAwesomeIcon
+                  color="#6d7c94"
+                  size="2x"
+                  icon={faHome}
+                />{" "}
+                <strong >  Inovices </strong>
+               
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/search">
-                    Search{" "}
+                <li className="nav-item  m-3 ps-3">
+                  <Link className="nav-link" to="/new" style={{color:'blue'}}>
+                    <FontAwesomeIcon
+                      color="green"
+                      size="lg"
+                      icon={faPlusCircle}
+                    />{" "}
+                   <strong style={{color:"#6d7c94"}}>  New Invoice</strong>
                   </Link>
                 </li>
               </ul>
-              <span style={{ marginRight: 20 }}>Welcome !</span>
+              <span style={{ marginRight: 20 }}>Welcome Admin !</span>
               <button className="btn btn-danger " onClick={() => setValue("")}>
                 Logout
               </button>
@@ -62,9 +73,10 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/" element={<InvoiceContiner />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/search/:id" element={<EditInvoice />} />
+      
+          <Route path="/" element={<Search />} />
+          <Route path="/new" element={<InvoiceContiner />} />
+          <Route path="/:id" element={<EditInvoice />} />
         </Routes>
       </div>
     </BrowserRouter>

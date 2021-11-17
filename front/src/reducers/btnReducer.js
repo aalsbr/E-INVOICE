@@ -6,6 +6,8 @@ const btnSave = (state = defualtState, { type, payload }) => {
   switch (type) {
     case "add":
       return { btnSave: [...state.btnSave, payload] };
+      case "reset":
+        return { btnSave: [] };
 
     case "edit":
       const newArray = [...state.btnSave]; //making a new array
@@ -58,8 +60,8 @@ export const remove = (payload) => {
     payload: payload,
   };
 };
-export const cleen = () => {
+export const reset = () => {
   return {
-    type: "cleen",
+    type: "reset",
   };
 };

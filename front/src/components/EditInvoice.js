@@ -1,11 +1,11 @@
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate,useParams } from "react-router-dom";
 
 import "../invoice.css";
 import MyDocument from "./document";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faPhoneSquareAlt, faPlus, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import {
@@ -38,6 +38,7 @@ function EditInvoice(props) {
   //redux actions
   const dispach = useDispatch();
   //react route dom hocks
+  const parm = useParams()
   const navigation = useNavigate();
   const { state } = useLocation();
   const { mydata } = state;
@@ -65,6 +66,8 @@ function EditInvoice(props) {
         return alert(`Please fill the product price in row number ${i + 1} `);
     }
 
+
+
     //Defined obj containes all invoice information to be stored in json file
     let obj = {
       date: date,
@@ -83,6 +86,7 @@ function EditInvoice(props) {
     } catch (err) {
       console.log(err);
     }
+    navigation("/")
     //Open PDF URL in new TAB
     // window.open(url, "_blank");
   };
@@ -90,7 +94,7 @@ function EditInvoice(props) {
   const handelDelete = async () => {
     try {
       const res = await axios.delete(`http://localhost:3003/${invoiceId}`);
-      navigation("/search");
+      navigation("/");
     } catch (err) {
       console.log(err);
     }
@@ -110,7 +114,7 @@ function EditInvoice(props) {
     );
 
     setId(mydata.itemId[mydata.itemId.length - 1].id);
-    setInvoiceId(mydata.id);
+    setInvoiceId(parm.id);
     setDate(mydata.date);
     setSubTotal(mydata.subTotal);
     setTax(mydata.tax);
@@ -156,7 +160,7 @@ function EditInvoice(props) {
           style={disabled ? { pointerEvents: "auto" } : { display: "none" }}
           onClick={() => (disabled ? setdisabled(false) : setdisabled(true))}
         >
-          {disabled ? " Enable Modify Content" : "Disable"}{" "}
+          <FontAwesomeIcon icon={faLock}/> Enable Edting
         </button>
 
         <div
@@ -186,7 +190,7 @@ function EditInvoice(props) {
                   Delete Invoice
                 </button>
                 <PDFDownloadLink
-                  document={<MyDocument test={mystate.editList} />}
+                  document={<MyDocument test={mystate.editList} list={[subTotal,tax,totalAmount,invoiceId,clientName,clientPhone]} />}
                   fileName="somename.pdf"
                 >
                   {({ blob, url, loading, error }) => (
@@ -217,10 +221,13 @@ function EditInvoice(props) {
                 <div className="row">
                   <div className="col-sm-6">
                     <div>
+                    <FontAwesomeIcon  icon={faUser}/>
                       <span className="text-sm text-grey-m2 align-middle">
                         Client Name:
                       </span>
                       <br />
+                     
+
                       <span className="text-600 text-110 text-blue align-middle">
                         <input
                           value={clientName}
@@ -229,6 +236,8 @@ function EditInvoice(props) {
                       </span>
                     </div>
                     <div>
+                    <FontAwesomeIcon  icon={faPhoneSquareAlt}/>
+
                       <span className="text-sm text-grey-m2 align-middle">
                         PhoneNo:
                       </span>

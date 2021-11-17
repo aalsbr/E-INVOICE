@@ -28,8 +28,9 @@ app.post("/login", (req, res) => {
 
 
 app.post("/post", (req, res) => {
+  
   let newPost = { id: invoiceObj.length + 1, ...req.body };
-
+  
   invoiceObj.push(newPost); // push new post
   //write in the current json file
   fs.writeFile("./invoiceData.json", JSON.stringify(invoiceObj), (err) => {});

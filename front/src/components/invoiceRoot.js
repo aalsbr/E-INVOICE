@@ -1,12 +1,13 @@
 import { Font, PDFDownloadLink } from "@react-pdf/renderer";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeState, edit, remove } from "../reducers/btnReducer";
+import { changeState, edit, remove, reset } from "../reducers/btnReducer";
 import "../invoice.css";
 import MyDocument from "./document";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPhone, faPhoneSquareAlt, faPlus, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 function InvoiceRoot() {
   const [id, setId] = useState(1);
@@ -19,6 +20,8 @@ function InvoiceRoot() {
   // set by the server side
   const [invoiceId, setInvoiceId] = useState(1);
   const [date, setDate] = useState("");
+
+  const navgation = useNavigate()
 
   const mystate = useSelector((state) => {
     return {
@@ -61,8 +64,10 @@ function InvoiceRoot() {
     } catch (err) {
       console.log(err);
     }
-    //Open PDF URL in new TAB
-    window.open(url, "_blank");
+    //nav to home page
+    dispach(reset()) 
+    navgation("/")
+    
   };
 
   useEffect(async () => {
@@ -97,8 +102,8 @@ function InvoiceRoot() {
 
   return (
     <div
-      className="page-content container  myshadow "
-      style={{ backgroundColor: "white", borderRadius: 20, marginTop: "1%" }}
+      className="page-content container  myshadow  transparent"
+      style={{  borderRadius: 20, marginTop: "1%" }}
     >
       <h3 className="pt-4" style={{ textAlign: "center" }}>
         Create New Invoice
@@ -113,7 +118,7 @@ function InvoiceRoot() {
         <div className="page-tools">
           <div className="action-buttons">
             <PDFDownloadLink
-              document={<MyDocument test={mystate.btnSave} />}
+              document={<MyDocument test={mystate.btnSave} list={[subTotal,tax,totalAmount,invoiceId,clientName,clientPhone]}/>}
               fileName="somename.pdf"
             >
               {({ blob, url, loading, error }) => (
@@ -122,7 +127,7 @@ function InvoiceRoot() {
                   className="btn btn-primary"
                   data-title="Print"
                 >
-                  Download
+                  Save&Download
                 </button>
               )}
             </PDFDownloadLink>
@@ -144,6 +149,7 @@ function InvoiceRoot() {
             <div className="row">
               <div className="col-sm-6">
                 <div>
+                 <FontAwesomeIcon  icon={faUser}/>
                   <span className="text-sm text-grey-m2 align-middle">
                     Client Name:
                   </span>
@@ -156,6 +162,7 @@ function InvoiceRoot() {
                   </span>
                 </div>
                 <div>
+                <FontAwesomeIcon  icon={faPhoneSquareAlt}/>
                   <span className="text-sm text-grey-m2 align-middle">
                     PhoneNo:
                   </span>
