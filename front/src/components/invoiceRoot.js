@@ -38,6 +38,9 @@ function InvoiceRoot() {
     //Input  Valdation
     if (!clientName || !clientPhone)
       return alert("please make sure Client Name && Client Phone Not empty");
+     
+      if(!mystate.btnSave.length)return alert("please add items")
+      
     for (let i = 0; i < mystate.btnSave.length; i++) {
       if (!mystate.btnSave[i].name)
         return alert(`Please fill the product name in row number ${i + 1} `);
@@ -102,8 +105,8 @@ function InvoiceRoot() {
 
   return (
     <div
-      className="page-content container  myshadow  transparent"
-      style={{  borderRadius: 20, marginTop: "1%" }}
+      className="page-content container  shadow  transparent"
+      style={{  borderRadius: 20, marginTop: "3%" }}
     >
       <h3 className="pt-4" style={{ textAlign: "center" }}>
         Create New Invoice

@@ -20,8 +20,8 @@ function App() {
     <BrowserRouter>
       <div>
         <nav
-          className="navbar navbar-expand-lg "
-          style={{ backgroundColor: "rgba(255,255,255,0.2)" }}
+          className="navbar navbar-expand-lg shadow "
+          style={{ backgroundColor: "rgba(255,255,255,0.5)" }}
         >
           <div className="container-fluid">
             <button

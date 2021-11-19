@@ -54,6 +54,9 @@ function EditInvoice(props) {
     //Input  Valdation
     if (!clientName || !clientPhone)
       return alert("please make sure Client Name && Client Phone Not empty");
+      
+      if(!mystate.btnSave.length)return alert("please add items")
+
     for (let i = 0; i < mystate.editList.length; i++) {
       if (!mystate.editList[i].name)
         return alert(`Please fill the product name in row number ${i + 1} `);

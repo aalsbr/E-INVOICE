@@ -1,11 +1,9 @@
 body{
-    background: #00d2ff;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #928DAB, #00d2ff);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #928DAB, #00d2ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */   
+    background: #ffffff;  /* fallback for old browsers */
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */   
 }
 .mybgd{
     background: rgb(255,255,255);
-    background: linear-gradient(71deg, rgba(255,255,255,1) 6%, rgba(0,210,255,1) 100%);
     
 }
 .shadow{
