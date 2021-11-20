@@ -17,11 +17,12 @@ function Search(props) {
 
 
   useEffect(async () => {
+
+    
     try {
       const res = await axios.get("http://localhost:3003/getAll");
-      setData(res.data);
+       setData(res.data);
        setEarnings( res.data.reduce((a, b) => a + (b["totalAmount"] || 0), 0).toFixed(2))
-   
        setInvoiceNo(res.data.length)
        setItemCount(res.data.reduce((a, b) => a + (b.itemId.length || 0), 0))
       

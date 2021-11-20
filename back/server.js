@@ -13,6 +13,7 @@ const jsonObj = JSON.parse(jsonData);
 const InvoicData = fs.readFileSync("./invoiceData.json");
 const invoiceObj = JSON.parse(InvoicData);
 
+//login auth
 app.post("/login", (req, res) => {
   const userName = req.body.username;
   const passWord = req.body.password;
@@ -27,16 +28,14 @@ app.post("/login", (req, res) => {
 });
 
 
+//add new invoice 
 app.post("/post", (req, res) => {
-  
   let newPost = { id: invoiceObj.length + 1, ...req.body };
-  
+
   invoiceObj.push(newPost); // push new post
   //write in the current json file
   fs.writeFile("./invoiceData.json", JSON.stringify(invoiceObj), (err) => {});
   console.log("test");
-
-  res.json("");
 });
 
 // get id from invoise json
@@ -70,6 +69,7 @@ app.get("/getAll", (req, res) => {
   res.json(invoiceObj);
 });
 
+//when user is in edit invoice and click save changes
 app.put("/:id", (req, res) => {
   let index = invoiceObj.findIndex(
     (item) => item.id === parseInt(req.params.id)
@@ -89,6 +89,8 @@ app.put("/:id", (req, res) => {
   res.send(jsonObj);
 });
 
+
+//delete invoice
 app.delete("/:id", (req, res) => {
   let index = invoiceObj.findIndex(
     (item) => item.id === parseInt(req.params.id)
@@ -103,8 +105,7 @@ app.delete("/:id", (req, res) => {
       throw err;
     }
   });
-  res.send(invoiceObj);
+  res.json(invoiceObj);
 });
 
 app.listen(3003, console.log("running"));
-

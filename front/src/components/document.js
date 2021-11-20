@@ -1,19 +1,41 @@
 import React from "react";
-import { Document, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Image, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
+
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    width: '100%',
+    orientation: 'portrait',
+},
+view: {
+    width: '100%',
+    height: '100%',
+    padding: 0,
+    backgroundColor: 'white',
+},
+image: {
+    objectFit: 'cover',
+},
+  pageBackground: {
+    position: 'absolute',
+    minWidth: '100%',
+    minHeight: '100%',
+    display: 'block',
+    height: '100%',
+    width: '100%',
+  },
+});
 function MyDocument({ test,list }) {
   return (
     <Document>
-      <Page
-        size="A4"
-        style={{
-          marginTop: 50,
-          paddingRight: 50,
-          paddingLeft: 50,
-          height: 500,
-        }}
-      >
-        <View style={{ display: "flex", flexDirection: "row", gap: 100 }}>
-          <Text style={{ Position: "Absolute", left: -10, top: -30 }}>
+    <Page object-fit="fill" style={styles.page} size="A4">
+
+
+      
+      <Image src="https://www.arabnews.com/sites/default/files/styles/n_670_395/public/2021/09/08/2801231-1080283220.jpg?itok=f0GDNR4a" style={styles.image} />
+      <View >
+          <Text style={{ Position: "Absolute", left: 10, top: 30 }}>
             Invoice ID :{list[3]}
           </Text>
        
